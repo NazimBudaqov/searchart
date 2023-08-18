@@ -21,3 +21,4 @@ from .YearApiView import YearApiView
 from .MinMaxRankApiView import MinMaxRankApiView
 from .DescriptionApiView import DescriptionApiView
 from .get_default import SectSubsectIndicaView
+from .RanksView import AvailableRanksView 

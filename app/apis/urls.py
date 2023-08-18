@@ -15,7 +15,7 @@ urlpatterns = [
     path('years/', YearApiView.as_view(), name='years'),
     path('min-max-rank/', MinMaxRankApiView.as_view(), name='min_max_rank'),
     path('description/', DescriptionApiView.as_view(), name='description'),
-    # path('ranks/', AvailableRanksView.as_view(), name='get-available-ranks'),
+    path('ranks/', AvailableRanksView.as_view(), name='get-available-ranks'),
 
 
     #first dashboard
