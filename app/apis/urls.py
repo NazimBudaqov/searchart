@@ -19,7 +19,7 @@ urlpatterns = [
 
 
     #first dashboard
-    path('bar-chart/', BarChartApiView.as_view(), name='bar_chart'),
+    path('bar-chart/', AmountView.as_view(), name='bar_chart'),
     path('rank-difference/', RankDifferenceApiView.as_view(), name='rank_difference'),
     path('line-chart/', LineChartApiView.as_view(), name='line_chart'),
     path('bump-chart/', BumpChartApiView.as_view(), name='bump_chart'),
