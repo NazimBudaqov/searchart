@@ -38,7 +38,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    # path("admin/", admin.site.urls),
+    path("admin/", admin.site.urls),
     # path("", include("core.urls")),
     path("a1/api-auth/", include("rest_framework.urls")),
     path(
@@ -49,8 +49,6 @@ urlpatterns = [
     path("api/", include("apis.urls")),
     path('accounts/',include('accounts.urls')),
 
-    # path("a2/", include("users.urls")),
-    # path("a3/", include("profiles.urls")),
     path("__debug__/", include(debug_toolbar.urls)),
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
 ]

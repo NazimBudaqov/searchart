@@ -1,11 +1,13 @@
 from django.urls import path, include
 
+
 from .views import *
 
 urlpatterns = [
     path('sectors/', SectViewSet.as_view(), name='sectors'),
     path('subsectors/', SubSectApiView.as_view(), name='subsectors'),
     path('indicators/',  IndicaApiView.as_view(), name='indicators'),
+    path('def/', SectSubsectIndicaView.as_view(), name='get-default-data'),
     path('unique-country/', UniqueCountryApiView.as_view(), name='unique_country'),
     path('min-max-years/', MinMaxYearsApiView.as_view(), name='min_max_years'),
     path('indicators/<int:pk>/', IndicaApiView.as_view(), name='indicators-detail'),
@@ -13,16 +15,14 @@ urlpatterns = [
     path('years/', YearApiView.as_view(), name='years'),
     path('min-max-rank/', MinMaxRankApiView.as_view(), name='min_max_rank'),
     path('description/', DescriptionApiView.as_view(), name='description'),
+    # path('ranks/', AvailableRanksView.as_view(), name='get-available-ranks'),
+
+
     #first dashboard
     path('bar-chart/', BarChartApiView.as_view(), name='bar_chart'),
     path('rank-difference/', RankDifferenceApiView.as_view(), name='rank_difference'),
     path('line-chart/', LineChartApiView.as_view(), name='line_chart'),
     path('bump-chart/', BumpChartApiView.as_view(), name='bump_chart'),
-
-    # path('', SectSubsectIndicaView.as_view(), name='get-default-data'),
-    # path('countries-data/<str:indicator_name>/', CountriesView.as_view(), name='get-related-countries'),
-    # path('available-years/', AvailableYearsView.as_view(), name='get-available-years'),
-    # path('ranks/', AvailableRanksView.as_view(), name='get-available-ranks'),
     
     # #?year1=2010&year2=2020&ranks=5,172
     # path('diagramsData/', AllDiagramsView.as_view(),name='years-data'),
