@@ -7,7 +7,6 @@ urlpatterns = [
     path('sectors/', SectViewSet.as_view(), name='sectors'),
     path('subsectors/', SubSectApiView.as_view(), name='subsectors'),
     path('indicators/',  IndicaApiView.as_view(), name='indicators'),
-    path('def/', SectSubsectIndicaView.as_view(), name='get-default-data'),
     path('unique-country/', UniqueCountryApiView.as_view(), name='unique_country'),
     path('min-max-years/', MinMaxYearsApiView.as_view(), name='min_max_years'),
     path('indicators/<int:pk>/', IndicaApiView.as_view(), name='indicators-detail'),
@@ -15,19 +14,19 @@ urlpatterns = [
     path('years/', YearApiView.as_view(), name='years'),
     path('min-max-rank/', MinMaxRankApiView.as_view(), name='min_max_rank'),
     path('description/', DescriptionApiView.as_view(), name='description'),
+    
+    path('def/', SectSubsectIndicaView.as_view(), name='get-default-data'),
     path('ranks/', AvailableRanksView.as_view(), name='get-available-ranks'),
-    path('years_data/', RankAmountDiagrams.as_view(),name='diagram3&4-only'),
-
-
+    
 
     #first dashboard
     path('bar-chart/', AmountView.as_view(), name='bar_chart'),
-    path('rank-difference/', RankDifferenceApiView.as_view(), name='rank_difference'),
-    path('line-chart/', LineChartApiView.as_view(), name='line_chart'),
-    path('bump-chart/', BumpChartApiView.as_view(), name='bump_chart'),
+    path('rank-diff/', RankDifferenceApiView.as_view(), name='rank_difference'),
+    path('rank-amount-chart/', RankAmountDiagrams.as_view(),name='diagram_3&4'),
+    # path('line-chart/', LineChartApiView.as_view(), name='line_chart'),
+    # path('bump-chart/', BumpChartApiView.as_view(), name='bump_chart'),
     
     # #?year1=2010&year2=2020&ranks=5,172
-    # path('diagramsData/', AllDiagramsView.as_view(),name='years-data'),
     # path('by_amount/', AmountView.as_view(), name='diagram1-only'),
     # path('rank_diff/', RankDifferenceView.as_view(),name='diagram2-only'),
     # path('years_data/', RankAmountDiagrams.as_view(),name='diagram3&4-only'),
