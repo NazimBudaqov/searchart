@@ -24,39 +24,23 @@ class RankDifferenceApiView(APIView):
             year2= Country.objects.select_related('indicator')\
             .filter(indicator__indicator=indicator_name, country__in=countries).aggregate(max_year=Max('year'))['max_year']
         
-        queryset1 = Country.objects.select_related('indicator')\
+        year1_data = Country.objects.select_related('indicator')\
             .filter(indicator__indicator=indicator_name, 
                     country__in=countries,
                     year=year1).values('amount','country_code','country_code2',"country", "rank")
         
-        queryset2 = Country.objects.select_related('indicator')\
+        year2_data = Country.objects.select_related('indicator')\
             .filter(indicator__indicator=indicator_name, 
                     country__in=countries,
                     year=year2).values('amount','country_code','country_code2',"country", "rank")
 
-        # each_country_rank_diff = []
-        
-        # for data1, data2 in zip(queryset1, queryset2):
-        #     rank_diff = None
-        #     if data1.rank is not None and data2.rank is not None:
-        #         rank_diff = data1.rank - data2.rank
-            
-        #     each_country_rank_diff.append({
-        #         'country': data1.country,
-        #         'year1': year1,
-        #         'year2': year2,
-        #         'rank1': int(data1.rank),
-        #         'rank2': int(data2.rank),
-        #         'rank_difference': rank_diff,
-        #         'amount1': float(data1.amount),
-        #         'amount2': float(data2.amount),
-        #     })
+
 
         # Create a dictionary to store rank data for year1
         rank_by_country_year1 = {entry["country"]: { 
                                                     'rank':entry["rank"], 
                                                     'amount': entry["amount"]
-                                                    } for entry in queryset1}
+                                                    } for entry in year1_data}
 
         # Create a dictionary to store rank data for year2
         rank_by_country_year2 = {entry["country"]: {'country_code':entry["country_code"],
@@ -64,7 +48,7 @@ class RankDifferenceApiView(APIView):
                                                      
                                                     'rank':entry["rank"], 
                                                     'amount': entry['amount']
-                                                    } for entry in queryset2}
+                                                    } for entry in year2_data}
 
         # Create a dictionary to store rank difference
         rank_diff_by_country = defaultdict(dict)
