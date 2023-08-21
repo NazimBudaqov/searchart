@@ -24,23 +24,16 @@ class RankDifferenceApiView(APIView):
             year2= Country.objects.select_related('indicator')\
             .filter(indicator__indicator=indicator_name, country__in=countries).aggregate(max_year=Max('year'))['max_year']
         
-        year1_data = Country.objects.select_related('indicator')\
+        year_data = Country.objects.select_related('indicator')\
             .filter(indicator__indicator=indicator_name, 
                     country__in=countries,
-                    year=year1).values('amount','country_code','country_code2',"country", "rank")
-        
-        year2_data = Country.objects.select_related('indicator')\
-            .filter(indicator__indicator=indicator_name, 
-                    country__in=countries,
-                    year=year2).values('amount','country_code','country_code2',"country", "rank")
-
-
+                    year__in=[year1,year2]).values('year','amount','country_code','country_code2',"country", "rank")
 
         # Create a dictionary to store rank data for year1
         rank_by_country_year1 = {entry["country"]: { 
                                                     'rank':entry["rank"], 
                                                     'amount': entry["amount"]
-                                                    } for entry in year1_data}
+                                                    } for entry in year_data if entry['year'] == year1}
 
         # Create a dictionary to store rank data for year2
         rank_by_country_year2 = {entry["country"]: {'country_code':entry["country_code"],
@@ -48,7 +41,7 @@ class RankDifferenceApiView(APIView):
                                                      
                                                     'rank':entry["rank"], 
                                                     'amount': entry['amount']
-                                                    } for entry in year2_data}
+                                                    } for entry in year_data if entry['year'] == year2}
 
         # Create a dictionary to store rank difference
         rank_diff_by_country = []
