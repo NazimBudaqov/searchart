@@ -4,7 +4,7 @@ from core.models import Country
 from apis.serializers import CountrySerializer
 from rest_framework.response import Response
 from operator import itemgetter
-import pandas as pd
+# import pandas as pd
 
 
 class UniqueCountryApiView(APIView):

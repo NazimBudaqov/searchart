@@ -16,6 +16,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+    "192.168.8.38",
+    ]
 
 # Application definition
 
@@ -135,10 +139,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-    "localhost",
-]
+# INTERNAL_IPS = [
+#     "127.0.0.1",
+#     "localhost",
+# ]
 
 
 # Static files (CSS, JavaScript, Images)
