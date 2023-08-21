@@ -45,7 +45,7 @@ class AmountView(APIView):
             )
 
         result["countries_by_rank"] = sorted(
-            result["countries_by_rank"], key=lambda x: x["amount"], reverse=False
+            result["countries_by_rank"], key=lambda x: x["rank"], reverse=False
         )  # sort values by amount
 
         return Response(result, status=status.HTTP_200_OK)
