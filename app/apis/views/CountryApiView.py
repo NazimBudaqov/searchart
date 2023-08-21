@@ -11,7 +11,7 @@ class CountryApiView(APIView):
     def get(self, request):
         indicator = request.GET.get("indicator")
         queryset = (
-            Country.objects.filter(indicator__indicator=indicator)
+            Country.objects.select_related('indicator').filter(indicator__indicator=indicator)
             .order_by("country")
             .values_list("country", flat=True)
             .distinct()

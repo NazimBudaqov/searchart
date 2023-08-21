@@ -23,8 +23,7 @@ class AmountView(APIView):
 
         amounts = []
         for data in queryset:
-            # if data.year == year1:
-                amounts.append(data.amount)
+            amounts.append(float(data.amount))
 
         result["min_amount"] = min(amounts)
         result["max_amount"] = max(amounts)
@@ -34,23 +33,19 @@ class AmountView(APIView):
             country__in=countries,
             rank__range=ranks
         ):
-            # if (data.year == year1) and int(data.rank) in range(
-            #         ranks[0], ranks[1] + 1
-            #     ):
-                    # country_obj = model_to_dict(data.country)
-                    result["countries_by_rank"].append(
-                        {
-                            "country": data.country,
-                            "country_code": data.country_code,
-                            "country_code_2": data.country_code2,
-                            "rank": data.rank,
-                            "amount": data.amount,
-                            "year": data.year,
-                        }
-                    )
+            result["countries_by_rank"].append(
+                {
+                    "country": data.country,
+                    "country_code": data.country_code,
+                    "country_code_2": data.country_code2,
+                    "rank": data.rank,
+                    "amount": data.amount,
+                    "year": data.year,
+                }
+            )
 
         result["countries_by_rank"] = sorted(
-            result["countries_by_rank"], key=lambda x: x["amount"], reverse=True
+            result["countries_by_rank"], key=lambda x: x["amount"], reverse=False
         )  # sort values by amount
 
         return Response(result, status=status.HTTP_200_OK)

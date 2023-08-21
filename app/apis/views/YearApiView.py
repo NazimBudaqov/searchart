@@ -5,11 +5,11 @@ from rest_framework.response import Response
 
 class YearApiView(APIView):
     def get(self, request):
-        countries = str(request.GET.get("country")).split(",")
+        countries = str(request.GET.get("countries")).split(";")
         indicator = request.GET.get("indicator")
 
         queryset = (
-            Country.objects.filter(country__in=countries, indicator__indicator=indicator)
+            Country.objects.select_related('indicator').filter(country__in=countries, indicator__indicator=indicator)
             .order_by("year")
             .values_list("year", flat=True)
             .distinct()

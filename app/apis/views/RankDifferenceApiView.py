@@ -51,12 +51,12 @@ class RankDifferenceApiView(APIView):
                                                     } for entry in year2_data}
 
         # Create a dictionary to store rank difference
-        rank_diff_by_country = defaultdict(dict)
+        rank_diff_by_country = []
 
         for country in countries:
             # Check if the country has rank data for both years
             if country in rank_by_country_year1 and country in rank_by_country_year2:
-                rank_diff_by_country[country] = {
+                rank_diff_by_country.append({
                     'country':country,
                     'country_code':rank_by_country_year2[country]['country_code'],
                     'country_code_2':rank_by_country_year2[country]['country_code_2'],
@@ -66,15 +66,15 @@ class RankDifferenceApiView(APIView):
                     'second_amount' : float(rank_by_country_year2[country]['amount']),
                     'rank_difference' : rank_by_country_year1[country]['rank']
                     - rank_by_country_year2[country]['rank'],
-                }
+                })
                 
-                
+        ordered_rank_diff = sorted(rank_diff_by_country, key=lambda x: x['country'])
                 
         diagram2 = {
             "indicator": indicator_name,
             "first_year": int(year1),
             "second_year": int(year2),
-            "countries": rank_diff_by_country
+            "countries": ordered_rank_diff
         }
 
         return Response(diagram2, status=status.HTTP_200_OK)
