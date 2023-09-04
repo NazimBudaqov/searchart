@@ -19,8 +19,8 @@ class Country(models.Model):
     class Meta:
         verbose_name = "Country"
         verbose_name_plural = "Countries"
-        indexes = [
-            models.Index(fields=['indicator']),
-            models.Index(fields=['country']),
-            models.Index(fields=['year']),
-        ] #migrated
+        # indexes = [
+        #     models.Index(fields=['indicator']),
+        #     models.Index(fields=['country']),
+        #     models.Index(fields=['year']),
+        # ] #migrated

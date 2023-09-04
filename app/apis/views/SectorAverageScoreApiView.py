@@ -13,9 +13,9 @@ class SectorAverageScoreApiView(APIView):
         country = request.GET.get("country")
         year = request.GET.get("year")
         sector = request.GET.get("sector")
-        queryset = Country.objects.filter(country=country, year=year).values(
-            "indicator__indicator", "rank", "indicator__subsector__sector__sector"
-        )
+        # queryset = Country.objects.filter(country=country, year=year).values(
+        #     "indicator__indicator", "rank", "indicator__subsector__sector__sector"
+        # )
         indicators = (
             Country.objects.filter(country=country, year=year)
             .prefetch_related("indicator__subsector__sector")
