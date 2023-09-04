@@ -15,7 +15,7 @@ class AvailableRanksView(APIView):
         
         # get min and max rank
         ranks_list = []
-        print(queryset)
+        # print(queryset)
         for data in queryset:
             ranks_list.append(data.rank)
         
