@@ -42,7 +42,7 @@ class SectorYearScoreApiView(APIView):
                 count += 1
             average_score = round(total_score / count, 2)
             # print('year',year,'total',total_score,"count", count)
-            year_scores.append({'year': year, "average_score":average_score})
+            year_scores.append({'year': year, "score":average_score})
 
         #evvelki kod
         '''
