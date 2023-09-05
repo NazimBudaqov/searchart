@@ -12,36 +12,39 @@ class SectorAverageScoreApiView(APIView):
     def get(self, request):
         country = request.GET.get("country")
         year = request.GET.get("year")
-        sector = request.GET.get("sector")
-        # queryset = Country.objects.filter(country=country, year=year).values(
-        #     "indicator__indicator", "rank", "indicator__subsector__sector__sector"
-        # )
-        indicators = (
+        # sector = request.GET.get("sector")
+        
+        queryset = (
             Country.objects.filter(country=country, year=year)
             .prefetch_related("indicator__subsector__sector")
             .values_list("rank", "indicator__subsector__sector__sector")
         )
 
         sector_rank_dict = defaultdict(list)
-        for rank, sector in indicators:
+        for rank, sector in queryset:
             sector_rank_dict[sector].append(rank)
+
         max_rank_dict = {}
         for sector, ranks in sector_rank_dict.items():
             max_rank_sector = max(ranks)
             max_rank_dict[sector] = max_rank_sector
 
+        # print("len:",len(queryset))
         total_score = 0
         num_sectors = 0
-
-        for rank, sector in indicators:
+        ranks = []
+        for rank, sector in queryset:
             max_rank = max_rank_dict[sector]
             if rank == 0:
                 continue
             score = round((1 - rank / max_rank) * 100, 2)
+            
             if score == 0:
                 continue
             total_score += score
             num_sectors += 1
+            ranks.append(rank)
+        
         if num_sectors == 0:
             average_score = 0
         else:

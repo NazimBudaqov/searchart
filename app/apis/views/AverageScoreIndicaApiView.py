@@ -12,18 +12,16 @@ class AverageScoreIndicaApiView(APIView):
 
     def get(self, request):
         selected_country = request.GET.get("country")
-        year = request.GET.get("year")
-        queryset = Country.objects.filter(country=selected_country, year=year).values(
-            "indicator__indicator", "rank", "indicator__subsector__sector__sector"
-        )
-        indicators = (
-            Country.objects.filter(country=selected_country, year=year)
-            .prefetch_related("indicator__subsector__sector")
-            .values_list("rank", "indicator__subsector__sector__sector")
-        )
+        selected_year = request.GET.get("year")
+
+        queryset = Country.objects\
+            .filter(country=selected_country, year=selected_year)\
+            .values("rank", "indicator__indicator", "indicator__subsector__sector__sector")\
+            .prefetch_related("indicator__subsector__sector")\
+            
         sector_rank_dict = defaultdict(list)
-        for rank, sector in indicators:
-            sector_rank_dict[sector].append(rank)
+        for data in queryset:
+            sector_rank_dict[data['indicator__subsector__sector__sector']].append(data['rank'])
 
         max_rank_dict = {}
         for sector, ranks in sector_rank_dict.items():
@@ -56,5 +54,6 @@ class AverageScoreIndicaApiView(APIView):
                     "average_score": average_score,
                 }
             )
+        # print('total',data["total_score"],"count", data["count"])
         sector_info.sort(key=itemgetter("sector"))
         return Response(sector_info)
