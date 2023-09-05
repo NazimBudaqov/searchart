@@ -9,7 +9,6 @@ from django.db.models import Max, Subquery, OuterRef
 class SectorYearScoreApiView(APIView):
     serializer_class = CountrySerializer
 
-    #TODO fix errors. Result should be equal with AverageScoreIndicaApiView in each year
     def get(self, request):
         sector = request.GET.get("sector")
         country = request.GET.get("country")
@@ -39,9 +38,11 @@ class SectorYearScoreApiView(APIView):
                 max_rank = max_rank_dict[year]
                 score = round((1 - rank / max_rank) * 100, 2)
                 total_score += score
-                count += 1
+                if score!=0:
+                    count += 1
             average_score = round(total_score / count, 2)
-            # print('year',year,'total',total_score,"count", count)
+            # if year=="2019":
+            #     print('year',year,'total',total_score,"count", count)
             year_scores.append({'year': year, "score":average_score})
 
         #evvelki kod

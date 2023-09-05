@@ -54,6 +54,7 @@ class AverageScoreIndicaApiView(APIView):
                     "average_score": average_score,
                 }
             )
-        # print('total',data["total_score"],"count", data["count"])
+            # if sector=="Economy":
+            #     print('total',data["total_score"],"count", data["count"])
         sector_info.sort(key=itemgetter("sector"))
         return Response(sector_info)
