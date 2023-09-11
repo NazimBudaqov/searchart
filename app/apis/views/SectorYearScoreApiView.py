@@ -43,7 +43,7 @@ class SectorYearScoreApiView(APIView):
             if count!=0:
                 average_score = round(total_score / count, 2)
             else:
-                average_score = 0
+                average_score = None
             # if year=="2019":
             #     print('year',year,'total',total_score,"count", count)
             year_scores.append({'year': year, "score":average_score})
